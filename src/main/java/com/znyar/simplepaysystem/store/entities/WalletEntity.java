@@ -22,7 +22,6 @@ public class WalletEntity {
     private BigDecimal cashBalance;
     @CreditCardNumber(ignoreNonDigitCharacters = true)
     private String walletNumber;
-    private Long currencyId;
     @ManyToOne
-    private AccountEntity account;
+    private CurrencyEntity currency;
 }

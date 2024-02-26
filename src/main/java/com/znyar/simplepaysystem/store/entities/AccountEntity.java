@@ -21,6 +21,6 @@ public class AccountEntity {
     private String name;
     @Builder.Default
     private Instant createdAt = Instant.now();
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<WalletEntity> wallets = new ArrayList<>();
 }
