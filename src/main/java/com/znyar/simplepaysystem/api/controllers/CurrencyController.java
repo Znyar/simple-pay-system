@@ -24,14 +24,16 @@ public class CurrencyController {
 
     private static final String CREATE_CURRENCY = "/api/currencies";
     private static final String DELETE_CURRENCY = "/api/currencies/{currency_id}";
-    private static final String GET_CURRENCY = "/api/currencies";
+    private static final String GET_CURRENCY_LIST = "/api/currencies";
+    private static final String GET_CURRENCY = "/api/currencies/{currency_id}";
     private static final String UPDATE_CURRENCY = "/api/currencies/{currency_id}";
 
     @PostMapping(CREATE_CURRENCY)
     public CurrencyDto createCurrency(
             @RequestParam("currency_name") String currencyName,
             @RequestParam("currency_sale") BigDecimal currencySale,
-            @RequestParam("currency_purchase") BigDecimal currencyPurchase
+            @RequestParam("currency_purchase") BigDecimal currencyPurchase,
+            @RequestParam("currency_bin") String currencyBin
             ) {
 
         if (currencyRepository.findByNameIgnoreCase(currencyName).isPresent()) {
@@ -42,6 +44,7 @@ public class CurrencyController {
                 .name(currencyName)
                 .sale(currencySale)
                 .purchase(currencyPurchase)
+                .bin(currencyBin)
                 .build();
 
         return currencyDtoFactory.makeCurrencyDto(currencyRepository.save(currencyEntity));
@@ -59,12 +62,22 @@ public class CurrencyController {
         return AckDto.makeDefault(true);
     }
 
-    @GetMapping(GET_CURRENCY)
-    public List<CurrencyDto> getCurrencies() {
+    @GetMapping(GET_CURRENCY_LIST)
+    public List<CurrencyDto> getCurrency() {
         return currencyRepository.findAll()
                 .stream()
                 .map(currencyDtoFactory::makeCurrencyDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping(GET_CURRENCY)
+    public CurrencyDto getCurrency(@PathVariable("currency_id") Long currencyId) {
+
+        if (currencyRepository.findById(currencyId).isEmpty()) {
+            throw new NotFoundException(String.format("Currency with id \"%s\" doesn`t exist", currencyId));
+        }
+
+        return currencyDtoFactory.makeCurrencyDto(currencyRepository.findById(currencyId).get());
     }
 
     @PutMapping(UPDATE_CURRENCY)
@@ -72,7 +85,8 @@ public class CurrencyController {
             @PathVariable("currency_id") Long currencyId,
             @RequestParam(value = "currency_sale", required = false) Optional<BigDecimal> currencySale,
             @RequestParam(value = "currency_purchase", required = false) Optional<BigDecimal> currencyPurchase,
-            @RequestParam(value = "currency_name", required = false) Optional<String> currencyName
+            @RequestParam(value = "currency_name", required = false) Optional<String> currencyName,
+            @RequestParam(value = "currency_bin", required = false) Optional<String> currencyBin
         ) {
 
         if (currencyRepository.findById(currencyId).isEmpty()) {
@@ -86,6 +100,7 @@ public class CurrencyController {
         }
 
         toUpdateCurrency.setName(currencyName.orElse(toUpdateCurrency.getName()));
+        toUpdateCurrency.setBin(currencyBin.orElse(toUpdateCurrency.getBin()));
         toUpdateCurrency.setPurchase(currencyPurchase.orElse(toUpdateCurrency.getPurchase()));
         toUpdateCurrency.setSale(currencySale.orElse(toUpdateCurrency.getSale()));
 

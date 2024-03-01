@@ -19,5 +19,7 @@ public class WalletDto {
     @NotNull
     private BigDecimal cashBalance;
     @NotBlank
+    private String currencyName;
+    @NotBlank
     private String walletNumber;
 }

@@ -12,6 +12,7 @@ public class CurrencyDtoFactory {
                 .name(currency.getName())
                 .sale(currency.getSale())
                 .purchase(currency.getPurchase())
+                .bin(currency.getBin())
                 .build();
     }
 }

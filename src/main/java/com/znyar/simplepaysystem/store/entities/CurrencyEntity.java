@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import java.math.BigDecimal;
 
@@ -21,6 +22,9 @@ public class CurrencyEntity {
     private Long id;
     @Size(max = 3)
     private String name;
+    @Size(max = 4, min = 4)
+    @Column(unique = true)
+    private String bin;
     @Min(0)
     private BigDecimal purchase;
     @Min(0)

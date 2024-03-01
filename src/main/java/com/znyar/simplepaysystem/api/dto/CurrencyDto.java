@@ -18,6 +18,8 @@ public class CurrencyDto {
     @NotNull
     private String name;
     @NotNull
+    private String bin;
+    @NotNull
     private BigDecimal purchase;
     @NotNull
     private BigDecimal sale;

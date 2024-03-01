@@ -21,6 +21,7 @@ public class WalletEntity {
     @Min(0)
     private BigDecimal cashBalance;
     @CreditCardNumber(ignoreNonDigitCharacters = true)
+    @Column(unique = true)
     private String walletNumber;
     @ManyToOne
     private CurrencyEntity currency;

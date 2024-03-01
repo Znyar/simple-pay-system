@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface CurrencyRepository extends JpaRepository<CurrencyEntity, Long> {
     Optional<CurrencyEntity> findByNameIgnoreCase(String name);
+
 }

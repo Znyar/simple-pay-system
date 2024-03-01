@@ -11,6 +11,7 @@ public class WalletDtoFactory {
                 .id(wallet.getId())
                 .walletNumber(wallet.getWalletNumber())
                 .cashBalance(wallet.getCashBalance())
+                .currencyName(wallet.getCurrency().getName())
                 .build();
     }
 }
