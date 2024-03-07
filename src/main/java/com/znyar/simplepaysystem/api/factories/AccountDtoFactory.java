@@ -4,8 +4,6 @@ import com.znyar.simplepaysystem.api.dto.AccountDto;
 import com.znyar.simplepaysystem.store.entities.AccountEntity;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-
 @Component
 public class AccountDtoFactory {
 

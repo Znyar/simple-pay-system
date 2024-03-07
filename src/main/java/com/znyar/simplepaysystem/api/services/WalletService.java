@@ -1,5 +1,6 @@
 package com.znyar.simplepaysystem.api.services;
 
+import com.znyar.simplepaysystem.api.dto.AckDto;
 import com.znyar.simplepaysystem.api.exceptions.NotFoundException;
 import com.znyar.simplepaysystem.api.services.other.WalletNumberGenerator;
 import com.znyar.simplepaysystem.store.entities.CurrencyEntity;

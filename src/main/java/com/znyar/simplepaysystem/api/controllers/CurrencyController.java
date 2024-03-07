@@ -8,6 +8,7 @@ import com.znyar.simplepaysystem.api.factories.CurrencyDtoFactory;
 import com.znyar.simplepaysystem.store.entities.CurrencyEntity;
 import com.znyar.simplepaysystem.store.repositories.CurrencyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -50,6 +51,7 @@ public class CurrencyController {
         return currencyDtoFactory.makeCurrencyDto(currencyRepository.save(currencyEntity));
     }
 
+    @Transactional
     @DeleteMapping(DELETE_CURRENCY)
     public AckDto deleteCurrency(@PathVariable("currency_id") Long currencyId) {
 
@@ -62,6 +64,7 @@ public class CurrencyController {
         return AckDto.makeDefault(true);
     }
 
+    @Transactional
     @GetMapping(GET_CURRENCY_LIST)
     public List<CurrencyDto> getCurrency() {
         return currencyRepository.findAll()
@@ -70,6 +73,7 @@ public class CurrencyController {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @GetMapping(GET_CURRENCY)
     public CurrencyDto getCurrency(@PathVariable("currency_id") Long currencyId) {
 
@@ -80,6 +84,7 @@ public class CurrencyController {
         return currencyDtoFactory.makeCurrencyDto(currencyRepository.findById(currencyId).get());
     }
 
+    @Transactional
     @PutMapping(UPDATE_CURRENCY)
     public CurrencyDto updateCurrency(
             @PathVariable("currency_id") Long currencyId,

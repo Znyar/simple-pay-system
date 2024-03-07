@@ -1,13 +1,13 @@
 package com.znyar.simplepaysystem.api.services.other;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
-@Component
+@Service
 public class WalletNumberGeneratorImpl implements WalletNumberGenerator {
 
-    private Random random = new Random(System.currentTimeMillis());
+    private final Random random = new Random(System.currentTimeMillis());
 
     @Override
     public String generate(String bin, int length) {
